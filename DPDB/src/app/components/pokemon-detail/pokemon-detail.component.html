@@ -1,0 +1,24 @@
+<div *ngIf="pokemon">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>{{ pokemon.name | titlecase }} (#{{pokemon.id}})</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="profile-image-wrapper"><img src="{{pokemon.sprites.front_default}}"
+          alt="{{ pokemon.name }} image" class="profile-image"/></td>
+      </tr>
+      <tr>
+        <td *ngIf="pokemon.types.length === 1">
+          Type: {{ pokemon.types[0].type.name | titlecase }}
+        </td>
+        <td *ngIf="pokemon.types.length === 2">
+          Type: {{ pokemon.types[1].type.name | titlecase }} /
+          {{ pokemon.types[0].type.name | titlecase }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
