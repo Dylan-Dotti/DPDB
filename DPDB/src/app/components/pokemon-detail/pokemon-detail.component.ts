@@ -25,24 +25,25 @@ export class PokemonDetailComponent implements OnInit {
     this.route.url.subscribe(newUrl => {
       this.species = {};
       this.pokemon = {};
-      this.updateSpecies()
+      const identifier = this.route.snapshot.paramMap.get("idOrName").toLowerCase();
+      this.updateSpecies(identifier)
     });
   }
 
-  updateSpecies() {
-    this.speciesService.getByIdentifier(this.route.snapshot.paramMap.get("idOrName"))
+  updateSpecies(identifier: string): void {
+    this.speciesService.getByIdentifier(identifier)
     .subscribe(species => {
       this.species = species;
-      this.updatePokemon();
+      this.updatePokemon(identifier);
     },
     error => {
       this.species = undefined;
     })
   }
 
-  updatePokemon() {
+  updatePokemon(identifier: string): void {
     this.pokemonService
-      .getByIdentifier(this.route.snapshot.paramMap.get("idOrName"))
+      .getByIdentifier(identifier)
       .subscribe(pokemon => {
         this.pokemon = pokemon;
       },
@@ -51,9 +52,17 @@ export class PokemonDetailComponent implements OnInit {
       });
   }
 
-  getGenus() {
+  getGenus(): string {
     const genera = this.species.genera;
     const genusObj = genera.find(g => g.language.name === "en")
     return genusObj.genus;
+  }
+
+  speciesReady(): boolean {
+    return this.species.name;
+  }
+
+  pokemonReady(): boolean {
+    return this.pokemon.name;
   }
 }

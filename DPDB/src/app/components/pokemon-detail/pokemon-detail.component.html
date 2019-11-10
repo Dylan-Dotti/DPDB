@@ -1,4 +1,4 @@
-<div *ngIf="species && species.name && pokemon && pokemon.name">
+<div *ngIf="species && speciesReady()">
   <table class="table table-bordered">
     <thead>
       <!-- name and genus display -->
@@ -15,22 +15,31 @@
     <tbody>
       <!-- showcase image display -->
       <tr>
-        <td class="profile-image-wrapper"><img src="{{pokemon.sprites.front_default}}"
-          alt="{{ pokemon.name }} image" class="profile-image"/></td>
+        <td class="profile-image-wrapper">
+          <img *ngIf="pokemon && pokemonReady()" src="{{pokemon.sprites.front_default}}" class="profile-image"/>
+          <div *ngIf="pokemon && !pokemonReady()" class="spinner-border text-dark"></div>
+        </td>
       </tr>
       <!-- types display -->
       <tr>
-        <td *ngIf="pokemon.types.length === 1">
-          Type: {{ pokemon.types[0].type.name | titlecase }}
-        </td>
-        <td *ngIf="pokemon.types.length === 2">
-          Type: {{ pokemon.types[1].type.name | titlecase }} /
-          {{ pokemon.types[0].type.name | titlecase }}
+        <td>
+          <div *ngIf="pokemon && pokemonReady()">
+            <span *ngIf="pokemon.types.length === 1">
+              Type: {{ pokemon.types[0].type.name | titlecase }}
+            </span>
+            <span *ngIf="pokemon.types.length === 2">
+              Type: {{ pokemon.types[1].type.name | titlecase }} / {{ pokemon.types[0].type.name | titlecase }}
+            </span>
+          </div>
+          <div *ngIf="!pokemonReady()" class="spinner-border text-light"></div>
         </td>
       </tr>
     </tbody>
   </table>
 </div>
-<div *ngIf="!species" class="text-center" style="margin-top:40px">
-  <h3>Search returned no results</h3>
+<div *ngIf="species && !speciesReady()" class="d-flex justify-content-center">
+  <div class="spinner-border text-light" style="margin-top: 50px;"></div>
+</div>
+<div *ngIf="!species" class="text-center" style="margin-top:50px">
+  <h3>That Pokémon does not exist!</h3>
 </div>
