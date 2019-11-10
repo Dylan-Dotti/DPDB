@@ -1,9 +1,15 @@
-<div *ngIf="pokemon && pokemon.name">
+<div *ngIf="species && species.name && pokemon && pokemon.name">
   <table class="table table-bordered">
     <thead>
       <!-- name and genus display -->
       <tr>
-        <th>{{ pokemon.name | titlecase }} (#{{pokemon.id}})</th>
+        <th>
+          {{ species.name | titlecase }} (#{{species.id}})
+          <div class="font-weight-lighter">
+            {{ getGenus() }}
+          </div>
+
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -25,6 +31,6 @@
     </tbody>
   </table>
 </div>
-<div *ngIf="!pokemon" class="text-center" style="margin-top:40px">
+<div *ngIf="!species" class="text-center" style="margin-top:40px">
   <h3>Search returned no results</h3>
 </div>

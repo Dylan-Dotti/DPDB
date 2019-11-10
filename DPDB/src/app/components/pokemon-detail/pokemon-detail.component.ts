@@ -3,6 +3,7 @@ import { PokemonService } from "src/app/services/pokemon.service";
 import { ActivatedRoute } from "@angular/router";
 import { isDefined } from '@angular/compiler/src/util';
 import { isUndefined, isNull } from 'util';
+import { PokemonSpeciesService } from 'src/app/services/pokemon-species.service';
 
 @Component({
   selector: "app-pokemon-detail",
@@ -10,21 +11,36 @@ import { isUndefined, isNull } from 'util';
   styleUrls: ["./pokemon-detail.component.css"]
 })
 export class PokemonDetailComponent implements OnInit {
-  pokemon: object;
-  species: object;
-  evoChain: object;
+  species: any;
+  pokemon: any;
+  evoChain: any;
 
   constructor(
     private route: ActivatedRoute,
-    private pokemonService: PokemonService
+    private pokemonService: PokemonService,
+    private speciesService: PokemonSpeciesService
   ) {}
 
   ngOnInit() {
-    this.route.url.subscribe(newUrl => this.updatePokemon());
+    this.route.url.subscribe(newUrl => {
+      this.species = {};
+      this.pokemon = {};
+      this.updateSpecies()
+    });
+  }
+
+  updateSpecies() {
+    this.speciesService.getByIdentifier(this.route.snapshot.paramMap.get("idOrName"))
+    .subscribe(species => {
+      this.species = species;
+      this.updatePokemon();
+    },
+    error => {
+      this.species = undefined;
+    })
   }
 
   updatePokemon() {
-    this.pokemon = {};
     this.pokemonService
       .getByIdentifier(this.route.snapshot.paramMap.get("idOrName"))
       .subscribe(pokemon => {
@@ -35,6 +51,9 @@ export class PokemonDetailComponent implements OnInit {
       });
   }
 
-  getPokemon() {
+  getGenus() {
+    const genera = this.species.genera;
+    const genusObj = genera.find(g => g.language.name === "en")
+    return genusObj.genus;
   }
 }
