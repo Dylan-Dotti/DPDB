@@ -9,6 +9,8 @@ import { ActivatedRoute } from "@angular/router";
 })
 export class PokemonDetailComponent implements OnInit {
   pokemon: object;
+  species: object;
+  evoChain: object;
 
   constructor(
     private route: ActivatedRoute,
@@ -16,18 +18,19 @@ export class PokemonDetailComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getPokemon();
+    this.route.url.subscribe(newUrl => this.updatePokemon());
+  }
+
+  updatePokemon() {
+    this.pokemon = undefined;
+    this.pokemonService
+      .getByIdentifier(this.route.snapshot.paramMap.get("idOrName"))
+      .subscribe(pokemon => {
+        console.log(pokemon);
+        this.pokemon = pokemon;
+      });
   }
 
   getPokemon() {
-    this.route.url.subscribe(newUrl => {
-      this.pokemon = undefined;
-      this.pokemonService
-        .getPokemonByNameOrId(this.route.snapshot.paramMap.get("pokemonName"))
-        .subscribe(pokemon => {
-          console.log(pokemon);
-          this.pokemon = pokemon;
-        });
-    });
   }
 }
