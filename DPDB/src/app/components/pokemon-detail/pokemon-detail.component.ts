@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { PokemonService } from "src/app/services/pokemon.service";
 import { ActivatedRoute } from "@angular/router";
+import { isDefined } from '@angular/compiler/src/util';
+import { isUndefined, isNull } from 'util';
 
 @Component({
   selector: "app-pokemon-detail",
@@ -22,12 +24,14 @@ export class PokemonDetailComponent implements OnInit {
   }
 
   updatePokemon() {
-    this.pokemon = undefined;
+    this.pokemon = {};
     this.pokemonService
       .getByIdentifier(this.route.snapshot.paramMap.get("idOrName"))
       .subscribe(pokemon => {
-        console.log(pokemon);
         this.pokemon = pokemon;
+      },
+      error => {
+        this.pokemon = undefined;
       });
   }
 

@@ -1,15 +1,18 @@
-<div *ngIf="pokemon">
+<div *ngIf="pokemon && pokemon.name">
   <table class="table table-bordered">
     <thead>
+      <!-- name and genus display -->
       <tr>
         <th>{{ pokemon.name | titlecase }} (#{{pokemon.id}})</th>
       </tr>
     </thead>
     <tbody>
+      <!-- showcase image display -->
       <tr>
         <td class="profile-image-wrapper"><img src="{{pokemon.sprites.front_default}}"
           alt="{{ pokemon.name }} image" class="profile-image"/></td>
       </tr>
+      <!-- types display -->
       <tr>
         <td *ngIf="pokemon.types.length === 1">
           Type: {{ pokemon.types[0].type.name | titlecase }}
@@ -21,4 +24,7 @@
       </tr>
     </tbody>
   </table>
+</div>
+<div *ngIf="!pokemon" class="text-center" style="margin-top:40px">
+  <h3>Search returned no results</h3>
 </div>
