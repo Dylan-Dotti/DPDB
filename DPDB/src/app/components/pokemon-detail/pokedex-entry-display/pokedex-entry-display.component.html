@@ -1,0 +1,15 @@
+<table *ngIf="species" class="table table-sm table-bordered text-center">
+    <thead>
+        <tr><th colspan="2">Pokédex Entries</th></tr>
+        <tr>
+            <th>Version</th>
+            <th>Entry</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let entry of getEntries()">
+            <td>{{ entry.version.name }}</td>
+            <td>{{ entry.flavor_text }}</td>
+        </tr>
+    </tbody>
+</table>

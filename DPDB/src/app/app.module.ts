@@ -8,13 +8,15 @@ import { AppComponent } from './app.component';
 import { PokemonDetailComponent } from './components/pokemon-detail/pokemon-detail.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { PokemonSearchBarComponent } from './components/pokemon-search-bar/pokemon-search-bar.component';
+import { PokedexEntryDisplayComponent } from './components/pokemon-detail/pokedex-entry-display/pokedex-entry-display.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PokemonDetailComponent,
     NavBarComponent,
-    PokemonSearchBarComponent
+    PokemonSearchBarComponent,
+    PokedexEntryDisplayComponent
   ],
   imports: [
     BrowserModule,

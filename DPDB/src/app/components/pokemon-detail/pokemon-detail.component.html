@@ -1,3 +1,4 @@
+<!-- Main details display -->
 <div *ngIf="species && speciesReady()">
   <table class="table table-bordered">
     <thead>
@@ -43,3 +44,5 @@
 <div *ngIf="!species" class="text-center" style="margin-top:50px">
   <h3>That Pokémon does not exist!</h3>
 </div>
+<!-- End main details -->
+<app-pokedex-entry-display [species]="species"></app-pokedex-entry-display>
