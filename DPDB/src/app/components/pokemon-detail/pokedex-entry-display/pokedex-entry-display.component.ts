@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { GenerationService } from 'src/app/services/generation.service';
 
 @Component({
   selector: 'app-pokedex-entry-display',
@@ -9,7 +10,7 @@ export class PokedexEntryDisplayComponent implements OnInit {
   @Input() species;
   generations : Array<any>;
 
-  constructor() { }
+  constructor(private genService: GenerationService) { }
 
   ngOnInit() {
   }
