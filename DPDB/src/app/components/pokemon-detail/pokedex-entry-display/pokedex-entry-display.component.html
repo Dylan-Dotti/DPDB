@@ -6,7 +6,7 @@
             <th>Entry</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody *ngIf="speciesReady()">
         <tr *ngFor="let entry of getEntries()">
             <td>{{ entry.version.name }}</td>
             <td>{{ entry.flavor_text }}</td>

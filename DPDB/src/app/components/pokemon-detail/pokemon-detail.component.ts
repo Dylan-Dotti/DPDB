@@ -1,8 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { PokemonService } from "src/app/services/pokemon.service";
 import { ActivatedRoute } from "@angular/router";
-import { isDefined } from '@angular/compiler/src/util';
-import { isUndefined, isNull } from 'util';
 import { PokemonSpeciesService } from 'src/app/services/pokemon-species.service';
 
 @Component({
@@ -38,7 +36,7 @@ export class PokemonDetailComponent implements OnInit {
     },
     error => {
       this.species = undefined;
-    })
+    });
   }
 
   updatePokemon(identifier: string): void {

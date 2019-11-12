@@ -8,7 +8,7 @@ import { GenerationService } from 'src/app/services/generation.service';
 })
 export class PokedexEntryDisplayComponent implements OnInit {
   @Input() species;
-  generations : Array<any>;
+  generations : any[];
 
   constructor(private genService: GenerationService) { }
 
@@ -18,5 +18,9 @@ export class PokedexEntryDisplayComponent implements OnInit {
   getEntries() {
     return this.species.flavor_text_entries.filter(
       e => e.language.name === 'en').reverse();
+  }
+
+  speciesReady() {
+    return this.species.flavor_text_entries;
   }
 }
