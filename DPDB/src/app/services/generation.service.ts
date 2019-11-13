@@ -18,7 +18,7 @@ export class GenerationService implements HttpGetterService {
     return this.pokeapiService.getResource('generation', id);
   }
 
-  getAll(): Observable<Object[]> {
-    return this.getURLs()
+  getAll(): Observable<Observable<object>[]> {
+    return this.pokeapiService.getAllResources('generation');
   }
 }

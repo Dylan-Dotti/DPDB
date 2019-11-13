@@ -7,9 +7,11 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class PokeapiHttpService {
-  private cache: Object;
+  private baseURL: string;
+  private cache: object;
 
   constructor(private httpClient: HttpClient) {
+    this.baseURL = 'https://pokeapi.co/api/v2'
     this.cache = {};
   }
 
@@ -18,8 +20,16 @@ export class PokeapiHttpService {
       map(res => res.results.map(r => r.url)));
   }
 
+  getIDs(category: string): Observable<string[]> {
+    return this.getURLs(category).pipe(
+      map(urls => urls.map(url => url.replace(
+        `${this.baseURL}/${category}/`, ''))
+      )
+    );
+  }
+
   getResource(category: string, query: string): Observable<any> {
-    const url = `https://pokeapi.co/api/v2/${category}/${query}`;
+    const url = `${this.baseURL}/${category}/${query}`;
     if (!this.cache[category]) {
       this.cache[category] = [];
     }
@@ -31,5 +41,11 @@ export class PokeapiHttpService {
       this.cache[category][query] = res;
     });
     return observableRes;
+  }
+
+  getAllResources(category: string): Observable<Observable<object>[]> {
+    return this.getIDs(category).pipe(map(
+      ids => ids.map(id => this.getResource(category, id))
+    ));
   }
 }
